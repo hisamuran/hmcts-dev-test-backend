@@ -44,4 +44,17 @@ public class CaseController {
 
         return ok(caseList);
     }
+    @GetMapping(value = "/update-task-status", produces = "application/json")
+    public ResponseEntity<ExampleCase> updateTaskStatus() {
+        return ok(new ExampleCase(4, "BBB11133", "Case Title 4",
+                                  "Case Description 4", "Case Status 4", LocalDateTime.now()
+        ));
+    }
+    @GetMapping(value = "/delete-task", produces = "application/json")
+    public ResponseEntity<ExampleCase> deleteTask() {
+        return ok(new ExampleCase(5, "CCC22233", "Case Title 5",
+                                  "Case Description 5", "Case Status 5", LocalDateTime.now()
+        ));
+    }
+
 }
