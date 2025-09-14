@@ -18,4 +18,10 @@ public class CaseController {
                                   "Case Description", "Case Status", LocalDateTime.now()
         ));
     }
+    @GetMapping(value = "/create-task", produces = "application/json")
+    public ResponseEntity<ExampleCase> createTask() {
+        return ok(new ExampleCase(2, "DEF67890", "Case Title 2",
+                                  "Case Description 2", "Case Status 2", LocalDateTime.now()
+        ));
+    }
 }
