@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.gov.hmcts.reform.dev.models.ExampleCase;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -23,5 +25,23 @@ public class CaseController {
         return ok(new ExampleCase(2, "DEF67890", "Case Title 2",
                                   "Case Description 2", "Case Status 2", LocalDateTime.now()
         ));
+    }
+    @GetMapping(value = "/retrieve-task", produces = "application/json")
+    public ResponseEntity<ExampleCase> getTask() {
+        return ok(new ExampleCase(3, "AAA11122", "Case Title 3",
+                                  "Case Description 3", "Case Status 3", LocalDateTime.now()
+        ));
+    }
+    @GetMapping(value = "/retrieve-all-tasks", produces = "application/json")
+    public ResponseEntity<List<ExampleCase>> getAllTasks() {
+        ExampleCase case1 = new ExampleCase(1, "ABC12345", "Case Title",
+                                  "Case Description", "Case Status", LocalDateTime.now());
+        ExampleCase case2 = new ExampleCase(2, "DEF67890", "Case Title 2",
+                                  "Case Description 2", "Case Status 2", LocalDateTime.now());
+        ExampleCase case3 = new ExampleCase(3, "AAA11122", "Case Title 3",
+                                  "Case Description 3", "Case Status 3", LocalDateTime.now());
+        List<ExampleCase> caseList = Arrays.asList(case1, case2, case3);
+
+        return ok(caseList);
     }
 }
