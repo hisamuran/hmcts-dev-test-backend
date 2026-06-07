@@ -2,12 +2,12 @@ package uk.gov.hmcts.reform.dev;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
+//import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
-import io.micrometer.core.ipc.http.HttpSender.Response;
-import io.swagger.v3.oas.models.examples.Example;
+//import io.micrometer.core.ipc.http.HttpSender.Response;
+//import io.swagger.v3.oas.models.examples.Example;
 import uk.gov.hmcts.reform.dev.controllers.CaseController;
 import uk.gov.hmcts.reform.dev.models.ExampleCase;
 
@@ -15,11 +15,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+//import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+//import java.time.LocalDateTime;
+//import java.util.Arrays;
 import java.util.List;
+
 @ExtendWith(MockitoExtension.class)
 class DemoUnitTest {
+
+    private List<ExampleCase> cases;
 
     @Test
     void exampleOfTest() {
@@ -27,8 +32,8 @@ class DemoUnitTest {
     }
 
     @Test
-    void getExampleCaseTest(){
-        CaseController caseController = new CaseController();
+    void getExampleCaseTest() {
+        CaseController caseController = new CaseController(this.cases);
         ResponseEntity<ExampleCase> res = caseController.getExampleCase();
         assertNotNull(res);
         assertEquals("200 OK", res.getStatusCode().toString());
@@ -40,9 +45,16 @@ class DemoUnitTest {
     }
 
     @Test
-    void createTaskTest(){
-        CaseController caseController = new CaseController();
-        ResponseEntity<ExampleCase> res = caseController.createTask();
+    void createTaskTest() {
+        CaseController caseController = new CaseController(this.cases);
+        ExampleCase exampleCase = new ExampleCase(
+            2, 
+            "DEF67890", 
+            "Case Title 2", 
+            "Case Description 2", 
+            "Case Status 2", 
+            LocalDateTime.now());
+        ResponseEntity<ExampleCase> res = caseController.createTask(exampleCase);
         assertNotNull(res);
         assertEquals("200 OK", res.getStatusCode().toString());
         assertEquals(2, res.getBody().getId());
@@ -53,8 +65,8 @@ class DemoUnitTest {
     }
 
     @Test
-    void getTaskTest(){
-        CaseController caseController = new CaseController();
+    void getTaskTest() {
+        CaseController caseController = new CaseController(this.cases);
         ResponseEntity<ExampleCase> res = caseController.getTask();
         assertNotNull(res);
         assertEquals("200 OK", res.getStatusCode().toString());
@@ -66,8 +78,8 @@ class DemoUnitTest {
     }
 
     @Test
-    void getAllTasksTest(){
-        CaseController caseController = new CaseController();
+    void getAllTasksTest() {
+        CaseController caseController = new CaseController(this.cases);
         ResponseEntity<List<ExampleCase>> res = caseController.getAllTasks();
         assertNotNull(res);
         assertEquals("200 OK", res.getStatusCode().toString());
@@ -90,8 +102,8 @@ class DemoUnitTest {
     }
 
     @Test
-    void updateTaskStatusTest(){
-        CaseController caseController = new CaseController();
+    void updateTaskStatusTest() {
+        CaseController caseController = new CaseController(this.cases);
         ResponseEntity<ExampleCase> res = caseController.updateTaskStatus();
         assertNotNull(res);
         assertEquals("200 OK", res.getStatusCode().toString());
@@ -103,8 +115,8 @@ class DemoUnitTest {
     }
 
     @Test
-    void deleteTaskTest(){
-        CaseController caseController = new CaseController();
+    void deleteTaskTest() {
+        CaseController caseController = new CaseController(this.cases);
         ResponseEntity<ExampleCase> res = caseController.deleteTask();
         assertNotNull(res);
         assertEquals("200 OK", res.getStatusCode().toString());
